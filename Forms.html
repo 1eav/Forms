@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms And Buttons</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <form id="myForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label for="email">email:</label>
+        <input type="email" id="email" name="email"><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password"><br><br>
+
+        <input type="checkbox" id="subscribe" name="subscribe">
+        <label for="checkbox">Subscribe:</label><br><br>
+
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Man:</label>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Woman:</label><br><br>
+
+        <label for="country">Country:</label>
+        <select name="country" id="country">
+            <option value="usa">USA</option>
+            <option value="ca">CA</option>
+            <option value="uk">UK</option>
+            <option value="ru">RU</option>
+            <option value="fr">FR</option>
+        </select><br><br>
+
+        <input type="submit" value="Send">
+        <input type="reset" value="Reset">
+    </form>
+
+    <form id="hiddenForm">
+        <input type="hidden" name="token" value="mySecretToken">
+        <input type="submit" value="Send token">
+    </form>
+
+    <form id="multipleChoiseForm">
+        <label for="colors">Select color(s):</label>
+        <select id="colors" name="colors" multiple>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+        </select><br><br>
+        <input type="submit" value="Send">
+    </form>
+
+    <form id="rangeForm">
+        <label for="slider">Select value:</label>
+        <input type="range" id="slider" min="0" max="100" step="5"></input>
+        <output id="sliderValue">50</output>
+        <input type="submit" value="Send">
+    </form>
+
+    <form id="searchForm">
+        <label for="search">Search</label>
+        <input type="text" id="search" name="search" list="suggestions"></input>
+        <datalist id="suggestions">
+            <option value="JavaScript"></option>
+            <option value="HTML"></option>
+            <option value="CSS"></option>
+            <option value="React"></option>
+            <option value="Node.js"></option>
+        </datalist>
+        <input type="submit" value="Search">
+    </form>
+
+    <script>
+        const searchForm = document.getElementById("searchForm");
+        const searchInput = document.getElementById("search");
+
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert(`Вы искали: ${searchInput.value}`);
+        });
+
+        const rangeForm = document.getElementById("rangeForm");
+        const slider = document.getElementById("slider");
+        const sliderValue = document.getElementById("sliderValue");
+
+        slider.addEventListener('input', function() {
+            sliderValue.textContent = this.value;
+        });
+
+        rangeForm.addEventListener ('submit', function(e) {
+            e.preventDefault();
+            alert(`Выбрано значение: ${slider.value}`);
+        });
+
+        const multipleChoiseForm = document.getElementById("multipleChoiseForm");
+        multipleChoiseForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const selectedColors = Array.from(document.querySelectorAll(`#colors option:checked`))
+                .map(option => option.value);
+
+            console.log(`Selected colors: ${selectedColors.join(', ')}`);
+        });
+
+        const hiddenForm = document.getElementById("hiddenForm");
+        hiddenForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const token = document.querySelector(`input[name="token"]`).value;
+            console.log(`Токен: ${token}`);
+        });
+
+        const myForm = document.getElementById("myForm");
+        myForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+        
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const subscribe = document.getElementById("subscribe").checked;
+            const gender = document.querySelector(`input[name="gender"]:checked`).value;
+            const country = document.getElementById("country").value;
+
+            console.log(`Name: ${name}`);
+            console.log(`Email address: ${email}`);
+            console.log(`Password: ${password}`);
+            console.log(`Subscribe to the newsletter: ${subscribe}`);
+            console.log(`Gender: ${gender}`);
+            console.log(`Country: ${country}`);
+        });
+    </script>
+</body>
+</html>
